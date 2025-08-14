@@ -61,7 +61,7 @@ export async function evaluateMonth(month: string): Promise<Player[]> {
   // Zapiš winner_shown_at
   mockMeta[month] = {
     month,
-    winner_shown_at: new Date().toISOString()
+    winner_shown_at: new Date()
   };
   
   return winners;
