@@ -143,7 +143,7 @@ export async function evaluateMonth(month: string): Promise<Player[]> {
       winner_shown_at: new Date().toISOString()
     });
 
-  return winners?.map(w => w.players as Player) || [];
+  return winners?.map(w => w.players[0] as Player) || [];
 }
 
 export async function getMonthlyMeta(month: string): Promise<MonthlyMeta | null> {
