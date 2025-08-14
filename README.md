@@ -12,10 +12,9 @@ Webová aplikace pro sledování, kdo tento měsíc chystá chlebíčky. Aplikac
 
 <img width="1431" height="785" alt="Snímka obrazovky 2025-08-14 o 23 45 50" src="https://github.com/user-attachments/assets/daf9e01d-d682-478e-94a2-a2015d3fc908" />
 
-<img width="1303" height="572" alt="Snímka obrazovky 2025-08-14 o 23 39 25" src="https://github.com/user-attachments/assets/f620b9ce-663b-4f7e-85da-847aa98f8b5e" />
-
 <img width="1297" height="502" alt="Snímka obrazovky 2025-08-14 o 23 39 12" src="https://github.com/user-attachments/assets/2e9ab0fd-7d24-4a30-91a6-ea6f30fab465" />
 
+<img width="1303" height="572" alt="Snímka obrazovky 2025-08-14 o 23 39 25" src="https://github.com/user-attachments/assets/f620b9ce-663b-4f7e-85da-847aa98f8b5e" />
 
 ## Technologie
 
