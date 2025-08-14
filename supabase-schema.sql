@@ -1,7 +1,7 @@
 -- Vytvoření tabulek pro SandwichMaker aplikaci
 
 -- Tabulka hráčů
-CREATE TABLE players (
+CREATE TABLE IF NOT EXISTS players (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name TEXT NOT NULL UNIQUE,
   avatar_file TEXT NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE players (
 );
 
 -- Tabulka měsíčních skóre
-CREATE TABLE monthly_scores (
+CREATE TABLE IF NOT EXISTS monthly_scores (
   id BIGSERIAL PRIMARY KEY,
   player_id UUID NOT NULL REFERENCES players(id) ON DELETE CASCADE,
   month CHAR(7) NOT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE monthly_scores (
 );
 
 -- Tabulka měsíčních metadat
-CREATE TABLE monthly_meta (
+CREATE TABLE IF NOT EXISTS monthly_meta (
   month CHAR(7) PRIMARY KEY,
   winner_shown_at TIMESTAMPTZ
 );

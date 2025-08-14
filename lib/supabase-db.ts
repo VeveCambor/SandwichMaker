@@ -51,7 +51,7 @@ export async function addPoint(playerId: string): Promise<void> {
   const currentPoints = currentScore?.points || 0;
   const newPoints = Math.min(3, currentPoints + 1);
 
-  // Upsert bodů
+  // Upsert bodů s ON CONFLICT
   const { error } = await supabase
     .from('monthly_scores')
     .upsert({
@@ -59,6 +59,8 @@ export async function addPoint(playerId: string): Promise<void> {
       month: currentMonth,
       points: newPoints,
       updated_at: new Date().toISOString()
+    }, {
+      onConflict: 'player_id,month'
     });
 
   if (error) throw error;
@@ -80,7 +82,7 @@ export async function removePoint(playerId: string): Promise<void> {
   const currentPoints = currentScore?.points || 0;
   const newPoints = Math.max(0, currentPoints - 1);
 
-  // Upsert bodů
+  // Upsert bodů s ON CONFLICT
   const { error } = await supabase
     .from('monthly_scores')
     .upsert({
@@ -88,6 +90,8 @@ export async function removePoint(playerId: string): Promise<void> {
       month: currentMonth,
       points: newPoints,
       updated_at: new Date().toISOString()
+    }, {
+      onConflict: 'player_id,month'
     });
 
   if (error) throw error;
@@ -102,7 +106,7 @@ export async function getPlayersWithScores(month: string): Promise<(Player & { p
       id,
       name,
       avatar_file,
-      monthly_scores!inner(points)
+      monthly_scores(points)
     `)
     .eq('monthly_scores.month', month);
 
