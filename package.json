@@ -9,19 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "sqlite": "^5.1.1",
-    "sqlite3": "^5.1.7",
+    "@vercel/postgres": "^0.10.0",
     "date-fns": "^2.30.0",
     "date-fns-tz": "^2.0.0",
     "next": "14.0.4",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
-    "@types/sqlite3": "^5.1.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "@types/sqlite3": "^5.1.0",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "typescript": "^5"

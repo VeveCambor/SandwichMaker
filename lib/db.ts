@@ -1,7 +1,7 @@
 import { zonedTimeToUtc, utcToZonedTime, format } from 'date-fns-tz';
 
-// Používáme mock databázi na Vercel, SQLite lokálně
-import * as mockDb from './mock-db';
+// Používáme Postgres na Vercel, SQLite lokálně
+import * as postgresDb from './postgres-db';
 import * as sqliteDb from './sqlite-db';
 
 // Typy
@@ -40,31 +40,31 @@ const isVercel = process.env.VERCEL === '1';
 
 // Databázové operace
 export async function addPlayer(name: string, avatarFile: string): Promise<Player> {
-  return isVercel ? mockDb.addPlayer(name, avatarFile) : sqliteDb.addPlayer(name, avatarFile);
+  return isVercel ? postgresDb.addPlayer(name, avatarFile) : sqliteDb.addPlayer(name, avatarFile);
 }
 
 export async function addPoint(playerId: string): Promise<void> {
-  return isVercel ? mockDb.addPoint(playerId) : sqliteDb.addPoint(playerId);
+  return isVercel ? postgresDb.addPoint(playerId) : sqliteDb.addPoint(playerId);
 }
 
 export async function removePoint(playerId: string): Promise<void> {
-  return isVercel ? mockDb.removePoint(playerId) : sqliteDb.removePoint(playerId);
+  return isVercel ? postgresDb.removePoint(playerId) : sqliteDb.removePoint(playerId);
 }
 
 export async function getPlayersWithScores(month: string): Promise<(Player & { points: number })[]> {
-  return isVercel ? mockDb.getPlayersWithScores(month) : sqliteDb.getPlayersWithScores(month);
+  return isVercel ? postgresDb.getPlayersWithScores(month) : sqliteDb.getPlayersWithScores(month);
 }
 
 export async function evaluateMonth(month: string): Promise<Player[]> {
-  return isVercel ? mockDb.evaluateMonth(month) : sqliteDb.evaluateMonth(month);
+  return isVercel ? postgresDb.evaluateMonth(month) : sqliteDb.evaluateMonth(month);
 }
 
 export async function getMonthlyMeta(month: string): Promise<MonthlyMeta | null> {
-  return isVercel ? mockDb.getMonthlyMeta(month) : sqliteDb.getMonthlyMeta(month);
+  return isVercel ? postgresDb.getMonthlyMeta(month) : sqliteDb.getMonthlyMeta(month);
 }
 
 export async function getYearlyStats(year: string): Promise<{ month: string; winners: Player[] }[]> {
-  return isVercel ? mockDb.getYearlyStats(year) : sqliteDb.getYearlyStats(year);
+  return isVercel ? postgresDb.getYearlyStats(year) : sqliteDb.getYearlyStats(year);
 }
 
-export default isVercel ? mockDb : sqliteDb;
+export default isVercel ? postgresDb : sqliteDb;

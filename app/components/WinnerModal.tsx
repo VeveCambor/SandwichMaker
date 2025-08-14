@@ -52,7 +52,10 @@ export default function WinnerModal({ isOpen, onClose, winners, month }: WinnerM
             className="winner-icon"
           />
           <h2 className="modal-title">
-            Tenhle měsíc chlebíčky připravuje:
+            {winners.length === 1 
+              ? 'Tenhle měsíc chlebíčky připravuje:'
+              : 'Tenhle měsíc chlebíčky připravují:'
+            }
           </h2>
         </div>
         
@@ -62,7 +65,7 @@ export default function WinnerModal({ isOpen, onClose, winners, month }: WinnerM
             <p>Zkuste to příští měsíc! 🥪</p>
           </div>
         ) : (
-          <div className="winners-list">
+          <div className={`winners-list ${winners.length > 2 ? 'multiple-winners' : ''}`}>
             {winners.map((winner, index) => (
               <div key={winner.id} className="winner-item" style={{ animationDelay: `${index * 0.2}s` }}>
                 <div className="winner-avatar">
