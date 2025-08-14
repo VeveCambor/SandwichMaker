@@ -123,17 +123,34 @@ export async function getPlayersWithScores(month: string): Promise<(Player & { p
 export async function evaluateMonth(month: string): Promise<Player[]> {
   if (!supabase) throw new Error('Supabase not configured');
   
-  // Získání vítězů (hráči s 3 body) pomocí join
-  const { data: winners, error } = await supabase
+  console.log('Vyhodnocuji měsíc:', month);
+  
+  // Získání vítězů (hráči s 3 body) - jednoduchý přístup
+  const { data: scores, error } = await supabase
     .from('monthly_scores')
-    .select(`
-      player_id,
-      players!inner(id, name, avatar_file)
-    `)
+    .select('player_id')
     .eq('month', month)
     .eq('points', 3);
 
+  console.log('Výsledek dotazu:', { scores, error });
+
   if (error) throw error;
+
+  if (!scores || scores.length === 0) {
+    console.log('Žádní vítězové');
+    return [];
+  }
+
+  // Získání detailů hráčů
+  const playerIds = scores.map(s => s.player_id);
+  const { data: players, error: playersError } = await supabase
+    .from('players')
+    .select('id, name, avatar_file')
+    .in('id', playerIds);
+
+  console.log('Hráči:', { players, playersError });
+
+  if (playersError) throw playersError;
 
   // Zapiš winner_shown_at
   await supabase
@@ -143,7 +160,10 @@ export async function evaluateMonth(month: string): Promise<Player[]> {
       winner_shown_at: new Date().toISOString()
     });
 
-  return winners?.map(w => w.players[0] as Player) || [];
+  const result = players || [];
+  console.log('Vrácené vítěze:', result);
+  
+  return result;
 }
 
 export async function getMonthlyMeta(month: string): Promise<MonthlyMeta | null> {
