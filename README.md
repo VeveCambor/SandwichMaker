@@ -10,13 +10,15 @@ Webová aplikace pro sledování, kdo tento měsíc chystá chlebíčky. Aplikac
 - **Automatický modal** - při prvním otevření v novém měsíci se zobrazí výsledky předchozího měsíce
 - **Optimistic UI** - okamžité aktualizace s fallback při chybě
 
-<img width="1431" height="785" alt="Snímka obrazovky 2025-08-14 o 23 45 50" src="https://github.com/user-attachments/assets/daf9e01d-d682-478e-94a2-a2015d3fc908" />
+<img width="1395" height="780" alt="Snímka obrazovky 2025-08-15 o 0 17 51" src="https://github.com/user-attachments/assets/689b55b2-a3d4-466f-9d1e-c8562ad853b7" />
 
-<img width="1012" height="745" alt="Snímka obrazovky 2025-08-14 o 23 38 17" src="https://github.com/user-attachments/assets/27a92de2-e02f-4b57-abc9-cab1e8f4071c" />
 
-<img width="1297" height="502" alt="Snímka obrazovky 2025-08-14 o 23 39 12" src="https://github.com/user-attachments/assets/2e9ab0fd-7d24-4a30-91a6-ea6f30fab465" />
+<img width="869" height="654" alt="Snímka obrazovky 2025-08-15 o 0 18 06" src="https://github.com/user-attachments/assets/49c7bbd2-2e3c-4cac-b86a-3d1d7654768e" />
 
-<img width="1303" height="572" alt="Snímka obrazovky 2025-08-14 o 23 39 25" src="https://github.com/user-attachments/assets/f620b9ce-663b-4f7e-85da-847aa98f8b5e" />
+
+<img width="1357" height="776" alt="Snímka obrazovky 2025-08-15 o 0 18 24" src="https://github.com/user-attachments/assets/7a1f899d-3bb1-4ec5-be27-7c14aa9f6378" />
+
+
 
 ## Technologie
 
@@ -37,7 +39,7 @@ npm run build
 npm start
 ```
 
-Aplikace bude dostupná na `(https://sandwich-maker-iota.vercel.app/)`
+Aplikace bude dostupná na https://sandwich-maker-iota.vercel.app/
 
 
 ## Pravidla hry
