@@ -1,15 +1,22 @@
 # 🥪 SandwichMaker
 
-Webová aplikace pro sledování, kdo tento měsíc chystá chlebíčky. Aplikace umožňuje přidávat hráče, udělovat body (max 3 za měsíc) a vyhodnocovat měsíční vítěze.
+Webová aplikace pro sledování, kdo tento měsíc chystá chlebíčky. Aplikace udělovat hráčům body (max 3 za měsíc) a vyhodnocovat měsíční vítěze.
 
 ## Funkce
 
-- **Přidávání hráčů** s avatary z lokálních PNG souborů
 - **Systém bodování** - max 3 body za měsíc na hráče
 - **Měsíční vyhodnocení** - výherci jsou hráči s přesně 3 body
 - **Roční statistika** - přehled výherců za celý rok
 - **Automatický modal** - při prvním otevření v novém měsíci se zobrazí výsledky předchozího měsíce
 - **Optimistic UI** - okamžité aktualizace s fallback při chybě
+
+<img width="1431" height="785" alt="Snímka obrazovky 2025-08-14 o 23 45 50" src="https://github.com/user-attachments/assets/daf9e01d-d682-478e-94a2-a2015d3fc908" />
+
+<img width="1012" height="745" alt="Snímka obrazovky 2025-08-14 o 23 38 17" src="https://github.com/user-attachments/assets/27a92de2-e02f-4b57-abc9-cab1e8f4071c" />
+
+<img width="1297" height="502" alt="Snímka obrazovky 2025-08-14 o 23 39 12" src="https://github.com/user-attachments/assets/2e9ab0fd-7d24-4a30-91a6-ea6f30fab465" />
+
+<img width="1303" height="572" alt="Snímka obrazovky 2025-08-14 o 23 39 25" src="https://github.com/user-attachments/assets/f620b9ce-663b-4f7e-85da-847aa98f8b5e" />
 
 ## Technologie
 
@@ -18,28 +25,6 @@ Webová aplikace pro sledování, kdo tento měsíc chystá chlebíčky. Aplikac
 - **PostgreSQL** databáze
 - **Tailwind CSS** pro styling
 - **Server Actions** pro databázové operace
-
-## Instalace
-
-1. **Nainstalujte závislosti:**
-   ```bash
-   npm install
-   ```
-
-2. **Nastavte databázi:**
-   - Vytvořte PostgreSQL databázi
-   - Spusťte SQL skript `database.sql` pro vytvoření tabulek
-
-3. **Nastavte proměnné prostředí:**
-   Vytvořte soubor `.env.local`:
-   ```env
-   DATABASE_URL=postgresql://username:password@localhost:5432/sandwichmaker
-   ```
-
-4. **Přidejte obrázky:**
-   - Umístěte avatary do `/public/avatars/` (anna.png, petr.png, ondrej.png, marie.png)
-   - Přidejte `/public/sandwich.png` (velký obrázek pro modal)
-   - Přidejte `/public/sandwich-small.png` (malá ikona pro karty)
 
 ## Spuštění
 
@@ -52,24 +37,8 @@ npm run build
 npm start
 ```
 
-Aplikace bude dostupná na `http://localhost:3000`
+Aplikace bude dostupná na `(https://sandwich-maker-iota.vercel.app/)`
 
-## Struktura aplikace
-
-### Databáze
-- `players` - hráči s avatary
-- `monthly_scores` - měsíční skóre (max 3 body)
-- `monthly_meta` - metadata o zobrazených výsledcích
-
-### Komponenty
-- `PlayerCard` - karta hráče s avatarem a tlačítkem +1
-- `AddPlayerForm` - formulář pro přidání nového hráče
-- `WinnerModal` - modal s výsledky měsíce
-- `MonthSelector` - výběr měsíce
-
-### Stránky
-- `/` - hlavní dashboard
-- `/stats/[year]` - roční statistika
 
 ## Pravidla hry
 
@@ -79,10 +48,5 @@ Aplikace bude dostupná na `http://localhost:3000`
 4. **Časová zóna** = Europe/Prague
 5. **Identifikátor měsíce** = YYYY-MM
 
-## UX funkce
 
-- **Optimistic UI** pro +1 s debounce
-- **Automatické zobrazení** výsledků předchozího měsíce
-- **Responsive design** pro mobilní zařízení
-- **Accessibility** - focus trap, Esc pro zavření modalu
-- **Loading states** a error handling
+<img width="450" height="450" alt="winner" src="https://github.com/user-attachments/assets/7c94ff17-95bc-4bfa-9807-50584755ebb7" />
