@@ -6,10 +6,10 @@ export const AVATAR_FILES = [
   'Wewe.png'
 ];
 
-// Názvy měsíců v češtině - vylepšené verze
+// Názvy měsíců v češtině
 export const MONTH_NAMES = [
-  '❄️ Leden', '🌨️ Únor', '🌸 Březen', '🌷 Duben', '🌺 Květen', '🌻 Červen',
-  '☀️ Červenec', '🌞 Srpen', '🍂 Září', '🍁 Říjen', '🍃 Listopad', '❄️ Prosinec'
+  'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen',
+  'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec'
 ];
 
 // Pomocná funkce pro získání názvu měsíce
