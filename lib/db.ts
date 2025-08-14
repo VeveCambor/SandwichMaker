@@ -1,6 +1,7 @@
 import { zonedTimeToUtc, utcToZonedTime, format } from 'date-fns-tz';
 
-// Používáme SQLite místo PostgreSQL
+// Používáme mock databázi na Vercel, SQLite lokálně
+import * as mockDb from './mock-db';
 import * as sqliteDb from './sqlite-db';
 
 // Typy
@@ -34,33 +35,36 @@ export function getMonthFromDate(date: Date): string {
   return format(pragueTime, 'yyyy-MM');
 }
 
+// Detekce prostředí
+const isVercel = process.env.VERCEL === '1';
+
 // Databázové operace
 export async function addPlayer(name: string, avatarFile: string): Promise<Player> {
-  return sqliteDb.addPlayer(name, avatarFile);
+  return isVercel ? mockDb.addPlayer(name, avatarFile) : sqliteDb.addPlayer(name, avatarFile);
 }
 
 export async function addPoint(playerId: string): Promise<void> {
-  return sqliteDb.addPoint(playerId);
+  return isVercel ? mockDb.addPoint(playerId) : sqliteDb.addPoint(playerId);
 }
 
 export async function removePoint(playerId: string): Promise<void> {
-  return sqliteDb.removePoint(playerId);
+  return isVercel ? mockDb.removePoint(playerId) : sqliteDb.removePoint(playerId);
 }
 
 export async function getPlayersWithScores(month: string): Promise<(Player & { points: number })[]> {
-  return sqliteDb.getPlayersWithScores(month);
+  return isVercel ? mockDb.getPlayersWithScores(month) : sqliteDb.getPlayersWithScores(month);
 }
 
 export async function evaluateMonth(month: string): Promise<Player[]> {
-  return sqliteDb.evaluateMonth(month);
+  return isVercel ? mockDb.evaluateMonth(month) : sqliteDb.evaluateMonth(month);
 }
 
 export async function getMonthlyMeta(month: string): Promise<MonthlyMeta | null> {
-  return sqliteDb.getMonthlyMeta(month);
+  return isVercel ? mockDb.getMonthlyMeta(month) : sqliteDb.getMonthlyMeta(month);
 }
 
 export async function getYearlyStats(year: string): Promise<{ month: string; winners: Player[] }[]> {
-  return sqliteDb.getYearlyStats(year);
+  return isVercel ? mockDb.getYearlyStats(year) : sqliteDb.getYearlyStats(year);
 }
 
-export default sqliteDb;
+export default isVercel ? mockDb : sqliteDb;
