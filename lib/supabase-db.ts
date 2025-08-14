@@ -123,17 +123,15 @@ export async function getPlayersWithScores(month: string): Promise<(Player & { p
 export async function evaluateMonth(month: string): Promise<Player[]> {
   if (!supabase) throw new Error('Supabase not configured');
   
-  // Získání vítězů (hráči s 3 body)
+  // Získání vítězů (hráči s 3 body) pomocí join
   const { data: winners, error } = await supabase
-    .from('players')
-    .select('id, name, avatar_file')
-    .eq('monthly_scores.month', month)
-    .eq('monthly_scores.points', 3)
+    .from('monthly_scores')
     .select(`
-      id,
-      name,
-      avatar_file
-    `);
+      player_id,
+      players!inner(id, name, avatar_file)
+    `)
+    .eq('month', month)
+    .eq('points', 3);
 
   if (error) throw error;
 
@@ -145,7 +143,7 @@ export async function evaluateMonth(month: string): Promise<Player[]> {
       winner_shown_at: new Date().toISOString()
     });
 
-  return winners || [];
+  return winners?.map(w => w.players) || [];
 }
 
 export async function getMonthlyMeta(month: string): Promise<MonthlyMeta | null> {
