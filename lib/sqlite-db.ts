@@ -180,7 +180,7 @@ export async function getYearlyStats(year: string): Promise<{ month: string; win
   // Vytvořit pole pro všech 12 měsíců
   const stats = [];
   for (let month = 1; month <= 12; month++) {
-    const monthStr = `${year}-${month.toString().padStart(2, '0')}`;
+    const monthStr = `${year}-${month.toString().padStart(2, 0)}`;
     stats.push({
       month: monthStr,
       winners: monthlyWinners[monthStr] || []

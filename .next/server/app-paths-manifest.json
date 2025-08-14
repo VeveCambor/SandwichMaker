@@ -1,0 +1,4 @@
+{
+  "/page": "app/page.js",
+  "/stats/[year]/page": "app/stats/[year]/page.js"
+}
