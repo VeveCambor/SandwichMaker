@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import { useState } from 'react';
 import { addPointAction, removePointAction } from '@/app/actions';
+import { useAuthContext } from '@/app/contexts/AuthContext';
 
 interface PlayerCardProps {
   player: {
@@ -16,9 +17,15 @@ interface PlayerCardProps {
 export default function PlayerCard({ player }: PlayerCardProps) {
   const [points, setPoints] = useState(player.points);
   const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated, showPasswordModal } = useAuthContext();
 
   const handleAddPoint = async () => {
     if (points >= 3 || isLoading) return;
+    
+    if (!isAuthenticated) {
+      showPasswordModal();
+      return;
+    }
     
     setIsLoading(true);
     // Optimistic update
@@ -40,6 +47,11 @@ export default function PlayerCard({ player }: PlayerCardProps) {
 
   const handleRemovePoint = async () => {
     if (points <= 0 || isLoading) return;
+    
+    if (!isAuthenticated) {
+      showPasswordModal();
+      return;
+    }
     
     setIsLoading(true);
     // Optimistic update
@@ -100,7 +112,8 @@ export default function PlayerCard({ player }: PlayerCardProps) {
         <button
           onClick={handleRemovePoint}
           disabled={points <= 0 || isLoading}
-          className="btn-circle"
+          className={`btn-circle ${!isAuthenticated ? 'btn-locked' : ''}`}
+          title={!isAuthenticated ? 'Klikni pro odemknutí' : 'Odebrat bod'}
         >
           {isLoading ? '...' : '−'}
         </button>
@@ -108,7 +121,8 @@ export default function PlayerCard({ player }: PlayerCardProps) {
         <button
           onClick={handleAddPoint}
           disabled={points >= 3 || isLoading}
-          className="btn-circle"
+          className={`btn-circle ${!isAuthenticated ? 'btn-locked' : ''}`}
+          title={!isAuthenticated ? 'Klikni pro odemknutí' : 'Přidat bod'}
         >
           {isLoading ? '...' : '+'}
         </button>

@@ -6,6 +6,7 @@ import PlayerCard from '@/app/components/PlayerCard';
 import WinnerModal from '@/app/components/WinnerModal';
 import MonthSelector from '@/app/components/MonthSelector';
 import EvaluateButton from '@/app/components/EvaluateButton';
+import LogoutButton from '@/app/components/LogoutButton';
 import { checkPreviousMonthAction, evaluateMonthAction } from '@/app/actions';
 
 async function DashboardContent({ searchParams }: { searchParams: { month?: string } }) {
@@ -15,9 +16,12 @@ async function DashboardContent({ searchParams }: { searchParams: { month?: stri
 
   return (
     <div className="container">
-      {/* Výběr měsíce */}
-      <div className="month-selector">
-        <MonthSelector currentMonth={currentMonth} selectedMonth={selectedMonth} />
+      {/* Horní panel s měsícem a odhlášením */}
+      <div className="top-panel">
+        <div className="month-selector">
+          <MonthSelector currentMonth={currentMonth} selectedMonth={selectedMonth} />
+        </div>
+        <LogoutButton />
       </div>
       
       {/* Hlavní nadpis */}
