@@ -17,7 +17,7 @@ export default function YearlyEvaluateButton({ year }: YearlyEvaluateButtonProps
     setIsLoading(true);
     try {
       const result = await evaluateYearAction(year);
-      if (result.success) {
+      if (result.success && result.winners) {
         setWinners(result.winners);
         setIsModalOpen(true);
       } else {
