@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { Player, MonthlyScore, MonthlyMeta } from './db';
+import { Player, MonthlyScore, MonthlyMeta, YearlyData, YearlyEvaluation } from './db';
 import { getCurrentMonth } from './db';
 
 // Supabase klient
@@ -200,4 +200,76 @@ export async function getYearlyStats(year: string): Promise<{ month: string; win
   }
   
   return stats;
+}
+
+export async function getYearlyData(year: string): Promise<YearlyData[]> {
+  if (!supabase) throw new Error('Supabase not configured');
+  
+  // Získat všechny hráče
+  const { data: players, error: playersError } = await supabase
+    .from('players')
+    .select('id, name, avatar_file')
+    .order('name');
+  
+  if (playersError) throw playersError;
+  
+  // Získat skóre pro daný rok
+  const { data: scores, error: scoresError } = await supabase
+    .from('monthly_scores')
+    .select('month, player_id, points')
+    .like('month', `${year}-%`)
+    .order('month');
+  
+  if (scoresError) throw scoresError;
+  
+  // Vytvořit pole pro všech 12 měsíců
+  const yearlyData = [];
+  for (let month = 1; month <= 12; month++) {
+    const monthStr = `${year}-${month.toString().padStart(2, '0')}`;
+    const monthScores = scores?.filter(s => s.month === monthStr) || [];
+    
+    const monthPlayers = players?.map(player => {
+      const score = monthScores.find(s => s.player_id === player.id);
+      return {
+        ...player,
+        points: score ? score.points : 0
+      };
+    }) || [];
+    
+    yearlyData.push({
+      month: monthStr,
+      players: monthPlayers
+    });
+  }
+  
+  return yearlyData;
+}
+
+export async function evaluateYear(year: string): Promise<Player[]> {
+  if (!supabase) throw new Error('Supabase not configured');
+  
+  const monthlyBreakdown = await getYearlyStats(year);
+  const winCounts = new Map<string, number>();
+  
+  // Počítání výher pro každého hráče
+  monthlyBreakdown.forEach(month => {
+    month.winners.forEach(winner => {
+      winCounts.set(winner.id, (winCounts.get(winner.id) || 0) + 1);
+    });
+  });
+  
+  // Najít hráče s nejvíce výhrami
+  const maxWins = Math.max(...Array.from(winCounts.values()), 0);
+  
+  // Získat všechny hráče
+  const { data: allPlayers, error } = await supabase
+    .from('players')
+    .select('id, name, avatar_file')
+    .order('name');
+  
+  if (error) throw error;
+  
+  const winners = allPlayers?.filter(player => winCounts.get(player.id) === maxWins) || [];
+  
+  return winners;
 }

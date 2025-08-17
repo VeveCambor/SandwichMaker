@@ -52,10 +52,15 @@ export default function WinnerModal({ isOpen, onClose, winners, month }: WinnerM
             className="winner-icon"
           />
           <h2 className="modal-title">
-            {winners.length === 1 
-              ? 'Tenhle měsíc chlebíčky připravuje:'
-              : 'Tenhle měsíc chlebíčky připravují:'
-            }
+            {month.includes('(celý rok)') ? (
+              winners.length === 1 
+                ? 'Celkový vítěz roku:'
+                : 'Celkoví vítězové roku:'
+            ) : (
+              winners.length === 1 
+                ? 'Tenhle měsíc chlebíčky připravuje:'
+                : 'Tenhle měsíc chlebíčky připravují:'
+            )}
           </h2>
         </div>
         
@@ -85,7 +90,7 @@ export default function WinnerModal({ isOpen, onClose, winners, month }: WinnerM
         
         <div className="modal-footer">
           <p className="month-info">
-            {getMonthName(month)} {month.split('-')[0]}
+            {month.includes('(celý rok)') ? month : `${getMonthName(month)} ${month.split('-')[0]}`}
           </p>
         </div>
       </div>

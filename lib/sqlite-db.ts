@@ -1,6 +1,6 @@
 import sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
-import { Player, MonthlyScore, MonthlyMeta } from './db';
+import { Player, MonthlyScore, MonthlyMeta, YearlyData, YearlyEvaluation } from './db';
 import { getCurrentMonth } from './db';
 
 let db: Database | null = null;
@@ -188,6 +188,68 @@ export async function getYearlyStats(year: string): Promise<{ month: string; win
   }
   
   return stats;
+}
+
+export async function getYearlyData(year: string): Promise<YearlyData[]> {
+  const database = await getDatabase();
+  
+  const result = await database.all(`
+    SELECT ms.month, p.id, p.name, p.avatar_file, COALESCE(ms.points, 0) as points
+    FROM players p
+    CROSS JOIN (
+      SELECT '${year}-01' as month UNION SELECT '${year}-02' UNION SELECT '${year}-03' UNION SELECT '${year}-04'
+      UNION SELECT '${year}-05' UNION SELECT '${year}-06' UNION SELECT '${year}-07' UNION SELECT '${year}-08'
+      UNION SELECT '${year}-09' UNION SELECT '${year}-10' UNION SELECT '${year}-11' UNION SELECT '${year}-12'
+    ) months
+    LEFT JOIN monthly_scores ms ON p.id = ms.player_id AND ms.month = months.month
+    ORDER BY months.month, p.name
+  `);
+  
+  // Seskupit podle měsíců
+  const monthlyData: { [key: string]: (Player & { points: number })[] } = {};
+  
+  for (const row of result) {
+    if (!monthlyData[row.month]) {
+      monthlyData[row.month] = [];
+    }
+    monthlyData[row.month].push({
+      id: row.id,
+      name: row.name,
+      avatar_file: row.avatar_file,
+      points: row.points
+    });
+  }
+  
+  // Vytvořit pole pro všech 12 měsíců
+  const yearlyData = [];
+  for (let month = 1; month <= 12; month++) {
+    const monthStr = `${year}-${month.toString().padStart(2, '0')}`;
+    yearlyData.push({
+      month: monthStr,
+      players: monthlyData[monthStr] || []
+    });
+  }
+  
+  return yearlyData;
+}
+
+export async function evaluateYear(year: string): Promise<Player[]> {
+  const monthlyBreakdown = await getYearlyStats(year);
+  const winCounts = new Map<string, number>();
+  
+  // Počítání výher pro každého hráče
+  monthlyBreakdown.forEach(month => {
+    month.winners.forEach(winner => {
+      winCounts.set(winner.id, (winCounts.get(winner.id) || 0) + 1);
+    });
+  });
+  
+  // Najít hráče s nejvíce výhrami
+  const maxWins = Math.max(...Array.from(winCounts.values()), 0);
+  const allPlayers = await getPlayersWithScores(getCurrentMonth()); // Získáme všechny hráče
+  const winners = allPlayers.filter(player => winCounts.get(player.id) === maxWins);
+  
+  return winners;
 }
 
 export default getDatabase;

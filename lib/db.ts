@@ -24,6 +24,17 @@ export interface MonthlyMeta {
   winner_shown_at: Date | null;
 }
 
+export interface YearlyData {
+  month: string;
+  players: (Player & { points: number })[];
+}
+
+export interface YearlyEvaluation {
+  totalWins: number;
+  winners: Player[];
+  monthlyBreakdown: { month: string; winners: Player[] }[];
+}
+
 // Pomocné funkce pro práci s časovými zónami
 export function getCurrentMonth(): string {
   const pragueTime = utcToZonedTime(new Date(), 'Europe/Prague');
@@ -65,6 +76,14 @@ export async function getMonthlyMeta(month: string): Promise<MonthlyMeta | null>
 
 export async function getYearlyStats(year: string): Promise<{ month: string; winners: Player[] }[]> {
   return isVercel ? supabaseDb.getYearlyStats(year) : sqliteDb.getYearlyStats(year);
+}
+
+export async function getYearlyData(year: string): Promise<YearlyData[]> {
+  return isVercel ? supabaseDb.getYearlyData(year) : sqliteDb.getYearlyData(year);
+}
+
+export async function evaluateYear(year: string): Promise<Player[]> {
+  return isVercel ? supabaseDb.evaluateYear(year) : sqliteDb.evaluateYear(year);
 }
 
 export default isVercel ? supabaseDb : sqliteDb;

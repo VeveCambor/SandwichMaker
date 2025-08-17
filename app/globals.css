@@ -467,31 +467,161 @@ body {
     min-width: auto;
   }
   
-  /* Statistika na mobilu */
-  .stats-grid {
-    grid-template-columns: 1fr;
+
+}
+
+/* Chart section */
+.chart-section {
+  margin-top: 4rem;
+  padding: 2rem;
+  background: white;
+  border-radius: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Yearly Chart */
+.yearly-chart {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.chart-title {
+  text-align: center;
+  color: #1c00be;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+}
+
+.chart-container {
+  display: flex;
+  height: 300px;
+  margin-bottom: 2rem;
+  position: relative;
+}
+
+.y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 40px;
+  padding-right: 1rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  font-weight: 600;
+}
+
+.y-label {
+  text-align: right;
+  padding: 0.25rem 0;
+}
+
+.chart-area {
+  flex: 1;
+  position: relative;
+  border-left: 2px solid #e5e7eb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.grid-lines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.grid-line {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: #f3f4f6;
+}
+
+.player-line {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.line-path {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.data-point {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translate(-50%, 50%);
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.data-point:hover {
+  transform: translate(-50%, 50%) scale(1.2);
+}
+
+.x-axis {
+  position: absolute;
+  bottom: -30px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.x-label {
+  position: absolute;
+  transform: translateX(-50%);
+  font-size: 0.8rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-top: 1rem;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.legend-color {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+
+.legend-name {
+  color: #374151;
+}
+
+
+
+/* Responsive chart */
+@media (max-width: 768px) {
+  .chart-container {
+    height: 250px;
+  }
+  
+  .chart-legend {
     gap: 1rem;
   }
   
-  .stat-card {
-    padding: 1.5rem;
-  }
-  
-  .stat-month {
-    font-size: 1.5rem;
-  }
-  
-  .winner-card {
-    padding: 0.75rem;
-  }
-  
-  .winner-avatar {
-    width: 50px;
-    height: 50px;
-  }
-  
-  .winner-name {
-    font-size: 1rem;
+  .legend-item {
+    font-size: 0.8rem;
   }
 }
 

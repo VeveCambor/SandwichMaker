@@ -1,7 +1,9 @@
 import Link from 'next/link';
 import Image from 'next/image';
-import { getYearlyStats } from '@/lib/db';
+import { getYearlyStats, getYearlyData } from '@/lib/db';
 import { getMonthName } from '@/lib/constants';
+import YearlyChart from '@/app/components/YearlyChart';
+import YearlyEvaluateButton from '@/app/components/YearlyEvaluateButton';
 
 interface StatsPageProps {
   params: {
@@ -12,6 +14,7 @@ interface StatsPageProps {
 export default async function StatsPage({ params }: StatsPageProps) {
   const year = params.year;
   const stats = await getYearlyStats(year);
+  const yearlyData = await getYearlyData(year);
 
   return (
     <div className="container">
@@ -85,6 +88,16 @@ export default async function StatsPage({ params }: StatsPageProps) {
           ))}
         </div>
       )}
+      
+      {/* Roční graf */}
+      <div className="chart-section">
+        <YearlyChart data={yearlyData} />
+      </div>
+      
+      {/* Roční vyhodnocení */}
+      <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+        <YearlyEvaluateButton year={year} />
+      </div>
     </div>
   );
 }
