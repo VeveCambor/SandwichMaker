@@ -29,7 +29,7 @@ INSERT INTO players (name, avatar_file) VALUES
   ('Petr', 'BigC.png'),
   ('Marcus', 'Marcus.png'),
   ('Vratis', 'Vratis.png'),
-  ('Wewe', 'Wewe.png')
+  ('Verča', 'Verča.png')
 ON CONFLICT (name) DO NOTHING;
 
 -- Vytvoření záznamů pro aktuální měsíc

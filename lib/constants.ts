@@ -3,7 +3,7 @@ export const AVATAR_FILES = [
   'Vratis.png',
   'BigC.png', 
   'Marcus.png',
-  'Wewe.png'
+  'Verča.png'
 ];
 
 // Názvy měsíců v češtině

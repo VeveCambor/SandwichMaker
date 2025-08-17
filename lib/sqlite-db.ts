@@ -50,7 +50,7 @@ async function getDatabase(): Promise<Database> {
         ('1', 'Petr', 'BigC.png'),
         ('2', 'Marcus', 'Marcus.png'),
         ('3', 'Vratis', 'Vratis.png'),
-        ('4', 'Wewe', 'Wewe.png')
+        ('4', 'Verča', 'Verča.png')
       `);
       // Adding initial test points
       await db.exec(`

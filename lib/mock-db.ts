@@ -6,7 +6,7 @@ const mockPlayers: Player[] = [
   { id: '1', name: 'Petr', avatar_file: 'BigC.png' },
   { id: '2', name: 'Marcus', avatar_file: 'Marcus.png' },
   { id: '3', name: 'Vratis', avatar_file: 'Vratis.png' },
-  { id: '4', name: 'Wewe', avatar_file: 'Wewe.png' }
+  { id: '4', name: 'Verča', avatar_file: 'Verča.png' }
 ];
 
 const mockScores: { [key: string]: { [playerId: string]: number } } = {

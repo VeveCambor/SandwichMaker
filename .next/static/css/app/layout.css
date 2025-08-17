@@ -14,7 +14,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: linear-gradient(135deg, #ffffff, #f1f1fe, #d3d7fe);
+  background: linear-gradient(145deg, #ffffff, #f5f5fd, #d3d7fe);
   min-height: 100vh;
 }
 
@@ -309,19 +309,115 @@ body {
 
 /* Responsive */
 @media (max-width: 768px) {
-  .players-grid {
-    grid-template-columns: repeat(2, 1fr);
+  .container {
+    padding: 1rem;
+  }
+  
+  .top-panel {
+    flex-direction: column;
     gap: 1rem;
+    align-items: stretch;
+  }
+  
+  .month-selector {
+    text-align: center;
+  }
+  
+  .month-selector select {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  .header {
+    margin-bottom: 2rem;
   }
   
   .title {
-    font-size: 2rem;
+    font-size: 1.8rem;
+    line-height: 1.2;
+  }
+  
+  .subtitle {
+    font-size: 1.1rem;
+  }
+  
+  .players-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 100%;
   }
   
   .player-card {
-    width: 150px;
-    height: 150px;
-    padding: 1rem;
+    width: 140px;
+    height: 140px;
+    padding: 0.75rem;
+  }
+  
+  .avatar {
+    width: 70px;
+    height: 70px;
+  }
+  
+  .player-name {
+    font-size: 0.85rem;
+  }
+  
+  .sandwich-icon {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .player-container {
+    gap: 0.5rem;
+  }
+  
+  .btn-circle {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+  
+  .action-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    margin-top: 2rem;
+  }
+  
+  .action-buttons .btn {
+    width: 100%;
+    max-width: 280px;
+    justify-content: center;
+  }
+  
+  .logout-btn {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+  }
+  
+  .subtitle {
+    font-size: 1rem;
+  }
+  
+  .players-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .player-card {
+    width: 160px;
+    height: 160px;
   }
   
   .avatar {
@@ -330,16 +426,97 @@ body {
   }
   
   .player-name {
-    font-size: 0.9rem;
+    font-size: 1rem;
   }
   
-  .sandwich-icon {
-    width: 16px;
-    height: 16px;
+  .btn-circle {
+    width: 36px;
+    height: 36px;
+    font-size: 1.1rem;
   }
   
-  .player-container {
-    gap: 0.5rem;
+  .password-modal-large {
+    max-width: 95%;
+    min-height: 350px;
+  }
+  
+  .password-content {
+    padding: 1.5rem 0;
+  }
+  
+  .password-icon {
+    font-size: 3rem;
+  }
+  
+  .password-content h3 {
+    font-size: 1.3rem;
+  }
+  
+  .password-content p {
+    font-size: 1rem;
+  }
+  
+  .password-input-large {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+  
+  .password-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .password-actions .btn {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  /* Statistika na mobilu */
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .stat-card {
+    padding: 1.5rem;
+  }
+  
+  .stat-month {
+    font-size: 1.5rem;
+  }
+  
+  .winner-card {
+    padding: 0.75rem;
+  }
+  
+  .winner-avatar {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .winner-name {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 1024px) and (min-width: 769px) {
+  .players-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .player-card {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .avatar {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
