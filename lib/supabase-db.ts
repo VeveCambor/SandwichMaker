@@ -187,15 +187,29 @@ export async function getYearlyStats(year: string): Promise<{ month: string; win
   for (let month = 1; month <= 12; month++) {
     const monthStr = `${year}-${month.toString().padStart(2, '0')}`;
     
-    const { data: winners } = await supabase
-      .from('players')
-      .select('id, name, avatar_file')
-      .eq('monthly_scores.month', monthStr)
-      .eq('monthly_scores.points', 3);
+    // Získat ID hráčů s 3 body v daném měsíci
+    const { data: winnerScores } = await supabase
+      .from('monthly_scores')
+      .select('player_id')
+      .eq('month', monthStr)
+      .eq('points', 3);
 
+    // Získat data hráčů
+    const winnerIds = winnerScores?.map(w => w.player_id) || [];
+    let winners: Player[] = [];
+    
+    if (winnerIds.length > 0) {
+      const { data: players } = await supabase
+        .from('players')
+        .select('id, name, avatar_file')
+        .in('id', winnerIds);
+      
+      winners = players || [];
+    }
+    
     stats.push({
       month: monthStr,
-      winners: winners || []
+      winners: winners
     });
   }
   
