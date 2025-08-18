@@ -51,7 +51,7 @@ async function DashboardContent({ searchParams }: { searchParams: { month?: stri
                 opacity: 0
               }}
             >
-              <PlayerCard player={player} />
+              <PlayerCard player={player} selectedMonth={selectedMonth} />
             </div>
           ))
         )}

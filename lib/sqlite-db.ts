@@ -66,7 +66,7 @@ async function getDatabase(): Promise<Database> {
 }
 
 // Databázové operace
-export async function addPlayer(name: string, avatarFile: string): Promise<Player> {
+export async function addPlayer(name: string, avatarFile: string, month?: string): Promise<Player> {
   const database = await getDatabase();
   const id = Math.random().toString(36).substr(2, 9);
   
@@ -75,37 +75,37 @@ export async function addPlayer(name: string, avatarFile: string): Promise<Playe
     [id, name, avatarFile]
   );
   
-  const currentMonth = getCurrentMonth();
+  const targetMonth = month || getCurrentMonth();
   await database.run(
     'INSERT OR IGNORE INTO monthly_scores (player_id, month, points) VALUES (?, ?, 0)',
-    [id, currentMonth]
+    [id, targetMonth]
   );
   
   return { id, name, avatar_file: avatarFile };
 }
 
-export async function addPoint(playerId: string): Promise<void> {
+export async function addPoint(playerId: string, month?: string): Promise<void> {
   const database = await getDatabase();
-  const currentMonth = getCurrentMonth();
+  const targetMonth = month || getCurrentMonth();
   
   await database.run(`
     INSERT INTO monthly_scores (player_id, month, points) 
     VALUES (?, ?, 1) 
     ON CONFLICT(player_id, month) 
     DO UPDATE SET points = MIN(3, points + 1), updated_at = CURRENT_TIMESTAMP
-  `, [playerId, currentMonth]);
+  `, [playerId, targetMonth]);
 }
 
-export async function removePoint(playerId: string): Promise<void> {
+export async function removePoint(playerId: string, month?: string): Promise<void> {
   const database = await getDatabase();
-  const currentMonth = getCurrentMonth();
+  const targetMonth = month || getCurrentMonth();
   
   await database.run(`
     INSERT INTO monthly_scores (player_id, month, points) 
     VALUES (?, ?, 0) 
     ON CONFLICT(player_id, month) 
     DO UPDATE SET points = MAX(0, points - 1), updated_at = CURRENT_TIMESTAMP
-  `, [playerId, currentMonth]);
+  `, [playerId, targetMonth]);
 }
 
 export async function getPlayersWithScores(month: string): Promise<(Player & { points: number })[]> {

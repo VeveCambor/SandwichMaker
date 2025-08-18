@@ -10,7 +10,7 @@ const supabase = supabaseUrl && supabaseKey
   ? createClient(supabaseUrl, supabaseKey)
   : null;
 
-export async function addPlayer(name: string, avatarFile: string): Promise<Player> {
+export async function addPlayer(name: string, avatarFile: string, month?: string): Promise<Player> {
   if (!supabase) throw new Error('Supabase not configured');
   
   const { data: player, error } = await supabase
@@ -21,13 +21,13 @@ export async function addPlayer(name: string, avatarFile: string): Promise<Playe
 
   if (error) throw error;
 
-  // Vytvoření záznamu pro aktuální měsíc
-  const currentMonth = getCurrentMonth();
+  // Vytvoření záznamu pro vybraný měsíc nebo aktuální měsíc
+  const targetMonth = month || getCurrentMonth();
   await supabase
     .from('monthly_scores')
     .insert({ 
       player_id: player.id, 
-      month: currentMonth, 
+      month: targetMonth, 
       points: 0 
     })
     .select();
@@ -35,17 +35,17 @@ export async function addPlayer(name: string, avatarFile: string): Promise<Playe
   return player;
 }
 
-export async function addPoint(playerId: string): Promise<void> {
+export async function addPoint(playerId: string, month?: string): Promise<void> {
   if (!supabase) throw new Error('Supabase not configured');
   
-  const currentMonth = getCurrentMonth();
+  const targetMonth = month || getCurrentMonth();
   
   // Získání aktuálních bodů
   const { data: currentScore } = await supabase
     .from('monthly_scores')
     .select('points')
     .eq('player_id', playerId)
-    .eq('month', currentMonth)
+    .eq('month', targetMonth)
     .single();
 
   const currentPoints = currentScore?.points || 0;
@@ -56,7 +56,7 @@ export async function addPoint(playerId: string): Promise<void> {
     .from('monthly_scores')
     .upsert({
       player_id: playerId,
-      month: currentMonth,
+      month: targetMonth,
       points: newPoints,
       updated_at: new Date().toISOString()
     }, {
@@ -66,17 +66,17 @@ export async function addPoint(playerId: string): Promise<void> {
   if (error) throw error;
 }
 
-export async function removePoint(playerId: string): Promise<void> {
+export async function removePoint(playerId: string, month?: string): Promise<void> {
   if (!supabase) throw new Error('Supabase not configured');
   
-  const currentMonth = getCurrentMonth();
+  const targetMonth = month || getCurrentMonth();
   
   // Získání aktuálních bodů
   const { data: currentScore } = await supabase
     .from('monthly_scores')
     .select('points')
     .eq('player_id', playerId)
-    .eq('month', currentMonth)
+    .eq('month', targetMonth)
     .single();
 
   const currentPoints = currentScore?.points || 0;
@@ -87,7 +87,7 @@ export async function removePoint(playerId: string): Promise<void> {
     .from('monthly_scores')
     .upsert({
       player_id: playerId,
-      month: currentMonth,
+      month: targetMonth,
       points: newPoints,
       updated_at: new Date().toISOString()
     }, {

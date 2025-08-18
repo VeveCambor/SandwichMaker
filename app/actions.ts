@@ -3,10 +3,11 @@
 import { revalidatePath } from 'next/cache';
 import { addPoint, removePoint, evaluateMonth, evaluateYear } from '@/lib/db';
 
-export async function addPointAction(playerId: string) {
+export async function addPointAction(playerId: string, month?: string) {
   try {
-    await addPoint(playerId);
+    await addPoint(playerId, month);
     revalidatePath('/');
+    revalidatePath(`/?month=${month}`);
     return { success: true };
   } catch (error) {
     console.error('Chyba při přidávání bodu:', error);
@@ -14,10 +15,11 @@ export async function addPointAction(playerId: string) {
   }
 }
 
-export async function removePointAction(playerId: string) {
+export async function removePointAction(playerId: string, month?: string) {
   try {
-    await removePoint(playerId);
+    await removePoint(playerId, month);
     revalidatePath('/');
+    revalidatePath(`/?month=${month}`);
     return { success: true };
   } catch (error) {
     console.error('Chyba při odebírání bodu:', error);

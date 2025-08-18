@@ -50,16 +50,16 @@ export function getMonthFromDate(date: Date): string {
 const isVercel = process.env.VERCEL === '1';
 
 // Databázové operace
-export async function addPlayer(name: string, avatarFile: string): Promise<Player> {
-  return isVercel ? supabaseDb.addPlayer(name, avatarFile) : sqliteDb.addPlayer(name, avatarFile);
+export async function addPlayer(name: string, avatarFile: string, month?: string): Promise<Player> {
+  return isVercel ? supabaseDb.addPlayer(name, avatarFile, month) : sqliteDb.addPlayer(name, avatarFile, month);
 }
 
-export async function addPoint(playerId: string): Promise<void> {
-  return isVercel ? supabaseDb.addPoint(playerId) : sqliteDb.addPoint(playerId);
+export async function addPoint(playerId: string, month?: string): Promise<void> {
+  return isVercel ? supabaseDb.addPoint(playerId, month) : sqliteDb.addPoint(playerId, month);
 }
 
-export async function removePoint(playerId: string): Promise<void> {
-  return isVercel ? supabaseDb.removePoint(playerId) : sqliteDb.removePoint(playerId);
+export async function removePoint(playerId: string, month?: string): Promise<void> {
+  return isVercel ? supabaseDb.removePoint(playerId, month) : sqliteDb.removePoint(playerId, month);
 }
 
 export async function getPlayersWithScores(month: string): Promise<(Player & { points: number })[]> {

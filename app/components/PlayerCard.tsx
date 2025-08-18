@@ -1,7 +1,7 @@
 'use client';
 
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { addPointAction, removePointAction } from '@/app/actions';
 import { useAuthContext } from '@/app/contexts/AuthContext';
 
@@ -12,12 +12,18 @@ interface PlayerCardProps {
     avatar_file: string;
     points: number;
   };
+  selectedMonth: string;
 }
 
-export default function PlayerCard({ player }: PlayerCardProps) {
+export default function PlayerCard({ player, selectedMonth }: PlayerCardProps) {
   const [points, setPoints] = useState(player.points);
   const [isLoading, setIsLoading] = useState(false);
   const { isAuthenticated, showPasswordModal } = useAuthContext();
+
+  // Synchronizace lokálního state s player.points
+  useEffect(() => {
+    setPoints(player.points);
+  }, [player.points]);
 
   const handleAddPoint = async () => {
     if (points >= 3 || isLoading) return;
@@ -32,7 +38,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
     setPoints(prev => Math.min(3, prev + 1));
     
     try {
-      const result = await addPointAction(player.id);
+      const result = await addPointAction(player.id, selectedMonth);
       if (!result.success) {
         // Revert optimistic update on error
         setPoints(player.points);
@@ -58,7 +64,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
     setPoints(prev => Math.max(0, prev - 1));
     
     try {
-      const result = await removePointAction(player.id);
+      const result = await removePointAction(player.id, selectedMonth);
       if (!result.success) {
         // Revert optimistic update on error
         setPoints(player.points);
