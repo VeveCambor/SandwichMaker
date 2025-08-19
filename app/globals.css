@@ -241,9 +241,7 @@ body {
   pointer-events: none;
 }
 
-.data-point[data-tooltip] {
-  position: relative;
-}
+
 
 .btn-circle:hover:not(:disabled) {
   background: #2e20c7;
