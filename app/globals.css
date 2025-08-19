@@ -228,40 +228,15 @@ body {
   border-radius: 50%;
   border: 2px solid white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  transform: translate(-50%, 50%);
   cursor: pointer;
   transition: transform 0.2s ease;
 }
 
 .data-point:hover {
-  transform: translate(-50%, 50%) scale(1.2);
+  transform: scale(1.2);
 }
 
-.data-point-wrapper {
-  position: absolute;
-  transform: translate(-50%, 50%);
-  cursor: pointer;
-}
 
-/* Tooltips pro data body v grafu */
-.data-point-wrapper[data-tooltip]:hover::after {
-  content: attr(data-tooltip);
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  background: rgba(0, 0, 0, 0.9);
-  color: white;
-  padding: 0.5rem;
-  border-radius: 0.25rem;
-  font-size: 0.8rem;
-  white-space: nowrap;
-  z-index: 1000;
-  margin-bottom: 0.5rem;
-  opacity: 1;
-  transition: opacity 0.1s ease;
-  pointer-events: none;
-}
 
 
 

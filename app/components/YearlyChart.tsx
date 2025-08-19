@@ -60,24 +60,29 @@ export default function YearlyChart({ data }: YearlyChartProps) {
                 <div 
                   className="line-path"
                 >
-                  {playerData.map((points, monthIndex) => (
-                    <div
-                      key={monthIndex}
-                      className="data-point-wrapper"
-                      style={{
-                        left: `${(monthIndex / (months.length - 1)) * 100}%`,
-                        bottom: `${(points / maxPoints) * 100}%`,
-                      }}
-                      data-tooltip={`${player.name}: ${points} bodů v ${months[monthIndex]}`}
-                    >
+                  {playerData.map((points, monthIndex) => {
+                    // Počítáme, kolik hráčů má stejně bodů v tomto měsíci
+                    const samePointsCount = data[monthIndex].players.filter(p => p.points === points).length;
+                    const playerIndexInSamePoints = data[monthIndex].players
+                      .filter(p => p.points === points)
+                      .findIndex(p => p.id === player.id);
+                    
+                    // Offset pro překrývající se body
+                    const offset = samePointsCount > 1 ? (playerIndexInSamePoints - (samePointsCount - 1) / 2) * 8 : 0;
+                    
+                    return (
                       <div
+                        key={monthIndex}
                         className="data-point"
                         style={{
+                          left: `${(monthIndex / (months.length - 1)) * 100}%`,
+                          bottom: `${(points / maxPoints) * 100}%`,
                           backgroundColor: colors[playerIndex % colors.length],
+                          transform: `translate(-50%, 50%) translateX(${offset}px)`,
                         }}
                       />
-                    </div>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
             );
