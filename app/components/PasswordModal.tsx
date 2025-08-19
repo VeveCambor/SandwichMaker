@@ -53,7 +53,6 @@ export default function PasswordModal({ isOpen, onClose, onSuccess }: PasswordMo
     <div className="modal-overlay password-modal-overlay" onClick={onClose}>
       <div className="modal-content password-modal-large" onClick={e => e.stopPropagation()}>
         <div className="modal-header">
-          <h2>🔐 Ověření přístupu</h2>
           <button 
             className="modal-close" 
             onClick={onClose}

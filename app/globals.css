@@ -189,6 +189,29 @@ body {
   box-shadow: 0 2px 4px rgba(124, 58, 237, 0.3);
 }
 
+/* Zrychlení tooltipů */
+.btn-circle[title]:hover::after {
+  content: attr(title);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 0.5rem;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+}
+
+.btn-circle[title] {
+  position: relative;
+}
+
 .btn-circle:hover:not(:disabled) {
   background: #2e20c7;
   transform: none;
@@ -968,7 +991,7 @@ body {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 2rem 0;
+  padding: 1rem 0;
 }
 
 .password-icon {
