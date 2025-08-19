@@ -63,14 +63,20 @@ export default function YearlyChart({ data }: YearlyChartProps) {
                   {playerData.map((points, monthIndex) => (
                     <div
                       key={monthIndex}
-                      className="data-point"
+                      className="data-point-wrapper"
                       style={{
                         left: `${(monthIndex / (months.length - 1)) * 100}%`,
                         bottom: `${(points / maxPoints) * 100}%`,
-                        backgroundColor: colors[playerIndex % colors.length],
                       }}
                       data-tooltip={`${player.name}: ${points} bodů v ${months[monthIndex]}`}
-                    />
+                    >
+                      <div
+                        className="data-point"
+                        style={{
+                          backgroundColor: colors[playerIndex % colors.length],
+                        }}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
