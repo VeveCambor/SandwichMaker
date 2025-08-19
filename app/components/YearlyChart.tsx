@@ -59,9 +59,6 @@ export default function YearlyChart({ data }: YearlyChartProps) {
               <div key={player.id} className="player-line">
                 <div 
                   className="line-path"
-                  style={{
-                    background: `linear-gradient(to right, ${colors[playerIndex % colors.length]}, ${colors[playerIndex % colors.length]}88)`,
-                  }}
                 >
                   {playerData.map((points, monthIndex) => (
                     <div
