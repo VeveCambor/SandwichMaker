@@ -69,7 +69,7 @@ export default function YearlyChart({ data }: YearlyChartProps) {
                         bottom: `${(points / maxPoints) * 100}%`,
                         backgroundColor: colors[playerIndex % colors.length],
                       }}
-                      title={`${player.name}: ${points} bodů v ${months[monthIndex]}`}
+                      data-tooltip={`${player.name}: ${points} bodů v ${months[monthIndex]}`}
                     />
                   ))}
                 </div>

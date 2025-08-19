@@ -221,6 +221,30 @@ body {
   pointer-events: auto;
 }
 
+/* Tooltips pro data body v grafu */
+.data-point[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
+  z-index: 1000;
+  margin-bottom: 0.5rem;
+  opacity: 1;
+  transition: opacity 0.1s ease;
+  pointer-events: none;
+}
+
+.data-point[data-tooltip] {
+  position: relative;
+}
+
 .btn-circle:hover:not(:disabled) {
   background: #2e20c7;
   transform: none;
