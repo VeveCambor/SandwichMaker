@@ -190,8 +190,8 @@ body {
 }
 
 /* Zrychlení tooltipů */
-.btn-circle[title]:hover::after {
-  content: attr(title);
+.btn-circle[data-tooltip]:hover::after {
+  content: attr(data-tooltip);
   position: absolute;
   bottom: 100%;
   left: 50%;
@@ -208,8 +208,17 @@ body {
   transition: opacity 0.1s ease;
 }
 
-.btn-circle[title] {
+.btn-circle[data-tooltip] {
   position: relative;
+}
+
+/* Zakázání nativního tooltipu */
+.btn-circle[data-tooltip] {
+  pointer-events: auto;
+}
+
+.btn-circle[data-tooltip]:hover {
+  pointer-events: auto;
 }
 
 .btn-circle:hover:not(:disabled) {

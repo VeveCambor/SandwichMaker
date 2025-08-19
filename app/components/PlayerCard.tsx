@@ -119,7 +119,7 @@ export default function PlayerCard({ player, selectedMonth }: PlayerCardProps) {
           onClick={handleRemovePoint}
           disabled={points <= 0 || isLoading}
           className={`btn-circle ${!isAuthenticated ? 'btn-locked' : ''}`}
-          title={!isAuthenticated ? 'Klikni pro odemknutí' : 'Odebrat bod'}
+          data-tooltip={!isAuthenticated ? 'Klikni pro odemknutí' : 'Odebrat bod'}
         >
           {isLoading ? '...' : '−'}
         </button>
@@ -128,7 +128,7 @@ export default function PlayerCard({ player, selectedMonth }: PlayerCardProps) {
           onClick={handleAddPoint}
           disabled={points >= 3 || isLoading}
           className={`btn-circle ${!isAuthenticated ? 'btn-locked' : ''}`}
-          title={!isAuthenticated ? 'Klikni pro odemknutí' : 'Přidat bod'}
+          data-tooltip={!isAuthenticated ? 'Klikni pro odemknutí' : 'Přidat bod'}
         >
           {isLoading ? '...' : '+'}
         </button>
