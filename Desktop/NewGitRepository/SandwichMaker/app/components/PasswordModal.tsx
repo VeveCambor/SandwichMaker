@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { verifyPasswordAction } from '@/app/actions';
 
 interface PasswordModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSuccess: () => void;
 }
-
-const CORRECT_PASSWORD = process.env.NEXT_PUBLIC_APP_PASSWORD || 'sandwich2025'; // Heslo pro přístup
 
 export default function PasswordModal({ isOpen, onClose, onSuccess }: PasswordModalProps) {
   const [password, setPassword] = useState('');
@@ -27,18 +26,22 @@ export default function PasswordModal({ isOpen, onClose, onSuccess }: PasswordMo
     setIsLoading(true);
     setError('');
 
-    // Simulace krátkého zpoždění pro UX
-    await new Promise(resolve => setTimeout(resolve, 300));
-
-    if (password === CORRECT_PASSWORD) {
-      onSuccess();
-      onClose();
-    } else {
-      setError('Nesprávné heslo');
+    try {
+      const result = await verifyPasswordAction(password);
+      
+      if (result.success) {
+        onSuccess();
+        onClose();
+      } else {
+        setError('Nesprávné heslo');
+        setPassword('');
+      }
+    } catch (error) {
+      setError('Chyba při ověřování hesla');
       setPassword('');
+    } finally {
+      setIsLoading(false);
     }
-    
-    setIsLoading(false);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
