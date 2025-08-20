@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { verifyPasswordAction } from '@/app/actions';
+import { verifyPasswordAction } from '../actions';
 
 interface PasswordModalProps {
   isOpen: boolean;
